@@ -14,16 +14,6 @@ const mapDBToModel = {
   songs: ({
     id,
     title,
-    performer,
-  }) => ({
-    id,
-    title,
-    performer,
-  }),
-
-  songById: ({
-    id,
-    title,
     year,
     genre,
     performer,
