@@ -28,6 +28,26 @@ const mapDBToModel = {
     duration,
     albumId
   }),
+
+  playlists: ({
+    id,
+    name,
+    username,
+    songs
+  }) => ({
+    id,
+    name,
+    username,
+    songs
+  }),
+
+  playlistActivities: ({
+    playlistId,
+    activities
+  }) => ({
+    playlistId,
+    activities
+  }),
 }
 
 module.exports = { mapDBToModel };

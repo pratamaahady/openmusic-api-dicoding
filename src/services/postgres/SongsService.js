@@ -43,7 +43,7 @@ class SongsService {
     }
 
     if (albumId) {
-      where.push(`"albumId"='${albumId}'`);
+      where.push(`album_id='${albumId}'`);
     }
     
     // If criteria were added, append to query text
@@ -72,7 +72,7 @@ class SongsService {
   async editSongById(id, { title, year, genre, performer, duration, albumId }) {
     const updatedAt = new Date().toISOString();
     const query = {
-      text: 'UPDATE songs SET title = $1, year = $2, genre = $3, performer = $4, duration = $5, "albumId" = $6, updated_at = $7 WHERE id = $8 RETURNING id',
+      text: 'UPDATE songs SET title = $1, year = $2, genre = $3, performer = $4, duration = $5, album_id = $6, updated_at = $7 WHERE id = $8 RETURNING id',
       values: [title, year, genre, performer, duration, albumId, updatedAt, id],
     };
  
@@ -94,6 +94,19 @@ class SongsService {
     if (!result.rowCount) {
       throw new NotFoundError('Song gagal dihapus. Id tidak ditemukan');
     }
+  }
+
+  async getSongsByPlaylistId(playlistId) {
+    const query = {
+      text: `SELECT s.id, s.title, s.performer 
+      FROM songs s
+      JOIN playlist_songs ps ON ps.song_id = s.id
+      WHERE ps.playlist_id = $1`,
+      values: [playlistId]
+    };
+
+    const result = await this._pool.query(query);
+    return result.rows.map(mapDBToModel.songs);
   }
 }
 
