@@ -1,14 +1,14 @@
 const mapDBToModel = {
-  albums: ({ 
+  albums: ({
     id,
     name,
     year,
-    songs, 
+    songs,
   }) => ({
     id,
     name,
     year,
-    songs
+    songs,
   }),
 
   songs: ({
@@ -18,7 +18,7 @@ const mapDBToModel = {
     genre,
     performer,
     duration,
-    albumId
+    albumId,
   }) => ({
     id,
     title,
@@ -26,28 +26,28 @@ const mapDBToModel = {
     genre,
     performer,
     duration,
-    albumId
+    albumId,
   }),
 
   playlists: ({
     id,
     name,
     username,
-    songs
+    songs,
   }) => ({
     id,
     name,
     username,
-    songs
+    songs,
   }),
 
   playlistActivities: ({
     playlistId,
-    activities
+    activities,
   }) => ({
     playlistId,
-    activities
+    activities,
   }),
-}
+};
 
 module.exports = { mapDBToModel };

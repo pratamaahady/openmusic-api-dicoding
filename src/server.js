@@ -124,12 +124,11 @@ const init = async () => {
       },
     },
   ]);
-  
+
   server.ext('onPreResponse', (request, h) => {
     // mendapatkan konteks response dari request
     const { response } = request;
-  
-  
+
     if (response instanceof ClientError) {
       // membuat response baru dari response toolkit sesuai kebutuhan error handling
       const newResponse = h.response({
@@ -140,13 +139,13 @@ const init = async () => {
       return newResponse;
     }
 
-    if(response instanceof Error){
+    if (response instanceof Error) {
       console.log(response);
     }
-        
+
     // jika bukan ClientError, lanjutkan dengan response sebelumnya (tanpa terintervensi)
     return response.continue || response;
-  });  
+  });
 
   await server.start();
   console.log(`Server berjalan pada ${server.info.uri}`);

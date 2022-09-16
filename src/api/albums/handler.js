@@ -1,23 +1,21 @@
-const ClientError = require('../../exceptions/ClientError');
- 
 class AlbumsHandler {
   constructor(service, validator) {
     this._service = service;
     this._validator = validator;
- 
+
     this.postAlbumHandler = this.postAlbumHandler.bind(this);
     this.getAlbumsHandler = this.getAlbumsHandler.bind(this);
     this.getAlbumByIdHandler = this.getAlbumByIdHandler.bind(this);
     this.putAlbumByIdHandler = this.putAlbumByIdHandler.bind(this);
     this.deleteAlbumByIdHandler = this.deleteAlbumByIdHandler.bind(this);
   }
- 
+
   async postAlbumHandler(request, h) {
     this._validator.validateAlbumPayload(request.payload);
     const { name, year } = request.payload;
 
     const albumId = await this._service.addAlbum({ name, year });
-    
+
     const response = h.response({
       status: 'success',
       message: 'Album berhasil ditambahkan',
@@ -28,7 +26,7 @@ class AlbumsHandler {
     response.code(201);
     return response;
   }
- 
+
   async getAlbumsHandler() {
     const albums = await this._service.getAlbums();
     return {
@@ -38,8 +36,8 @@ class AlbumsHandler {
       },
     };
   }
- 
-  async getAlbumByIdHandler(request, h) {
+
+  async getAlbumByIdHandler(request) {
     const { id } = request.params;
     const album = await this._service.getAlbumById(id);
     return {
@@ -49,8 +47,8 @@ class AlbumsHandler {
       },
     };
   }
- 
-  async putAlbumByIdHandler(request, h) {
+
+  async putAlbumByIdHandler(request) {
     this._validator.validateAlbumPayload(request.payload);
     const { name, year } = request.payload;
     const { id } = request.params;
@@ -62,8 +60,8 @@ class AlbumsHandler {
       message: 'Album berhasil diperbarui',
     };
   }
- 
-  async deleteAlbumByIdHandler(request, h) {
+
+  async deleteAlbumByIdHandler(request) {
     const { id } = request.params;
     await this._service.deleteAlbumById(id);
 
@@ -73,5 +71,5 @@ class AlbumsHandler {
     };
   }
 }
- 
+
 module.exports = AlbumsHandler;
