@@ -4,11 +4,13 @@ const mapDBToModel = {
     name,
     year,
     songs,
+    cover,
   }) => ({
     id,
     name,
     year,
     songs,
+    coverUrl: cover,
   }),
 
   songs: ({

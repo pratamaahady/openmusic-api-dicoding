@@ -1,26 +1,26 @@
 exports.up = (pgm) => {
-  pgm.createTable('playlist_songs', {
+  pgm.createTable('user_album_likes', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
     },
-    playlist_id: {
+    user_id: {
       type: 'VARCHAR(50)',
       notNull: true,
-      references: '"playlists"',
+      references: '"users"',
       onDelete: 'cascade',
     },
-    song_id: {
+    album_id: {
       type: 'VARCHAR(50)',
       notNull: true,
-      references: '"songs"',
+      references: '"albums"',
       onDelete: 'cascade',
     },
   });
 
-  pgm.addConstraint('playlist_songs', 'unique_playlist_id_and_song_id', 'UNIQUE(playlist_id, song_id)');
+  pgm.addConstraint('user_album_likes', 'unique_user_id_and_album_id', 'UNIQUE(user_id, album_id)');
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('playlist_songs');
+  pgm.dropTable('user_album_likes');
 };
